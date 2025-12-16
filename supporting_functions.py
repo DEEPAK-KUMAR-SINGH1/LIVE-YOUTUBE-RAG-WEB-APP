@@ -20,7 +20,7 @@ from langchain_core.prompts import ChatPromptTemplate
 
 
 
-#load_dotenv()
+load_dotenv()
 
 #API_KEY = st.secrets["MISTRAL_API_KEY"]
 
@@ -198,5 +198,6 @@ def rag_answer(question, vectorstore):
     response= chain.invoke({"context":context_text,"question":question})
 
     return response.content
+
 
 
