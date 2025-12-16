@@ -1,6 +1,6 @@
 import time
 
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 import re
 import streamlit as st
 
@@ -17,6 +17,12 @@ from langchain_chroma import Chroma
 from langchain_mistralai import ChatMistralAI
 
 from langchain_core.prompts import ChatPromptTemplate
+
+# Load Mistral API key safely (Cloud)
+MISTRAL_API_KEY = st.secrets["MISTRAL_API_KEY"]
+# os.environ["MISTRAL_API_KEY"] = MISTRAL_API_KEY
+
+
 
 load_dotenv()
 
@@ -188,5 +194,6 @@ def rag_answer(question, vectorstore):
     #chain
     chain = prompt|llm
     response= chain.invoke({"context":context_text,"question":question})
+
 
     return response.content
