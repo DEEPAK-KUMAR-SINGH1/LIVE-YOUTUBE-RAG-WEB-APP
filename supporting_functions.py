@@ -85,4 +85,58 @@ def get_important_topics(transcript):
 def generate_notes(transcript):
     try:
         prompt = ChatPromptTemplate.from_template("""
-                You are
+                You are an AI note-taker. Your task is to read the following YouTube video transcript 
+                and produce well-structured, concise notes.
+
+                ⚡ Requirements:
+                - Present the output as **bulleted points**, grouped into clear sections.
+                - Highlight key takeaways, important facts, and examples.
+                - Use **short, clear sentences** (no long paragraphs).
+                - If the transcript includes multiple themes, organize them under **subheadings**.
+                - Do not add information that is not present in the transcript.
+
+                Here is the transcript:
+                {transcript}
+                """)
+        chain = prompt | llm
+        response = chain.invoke({"transcript": transcript})
+        return response.content
+    except Exception as e:
+        st.error(f"Error fetching video: {e}")
+
+# Function to create chunks
+def create_chunks(transcript):
+    text_splitters = RecursiveCharacterTextSplitter(chunk_size=10000, chunk_overlap=1000)
+    doc = text_splitters.create_documents([transcript])
+    return doc
+
+# Function to create embedding and store it into a vector space
+def create_vector_store(docs):
+    embedding = MistralAIEmbeddings(model="mistral-embed")
+    vector_store = Chroma.from_documents(docs, embedding)
+    return vector_store
+
+# RAG function
+def rag_answer(question, vectorstore):
+    results = vectorstore.similarity_search(question, k=4)
+    context_text = "\n".join([i.page_content for i in results])
+    prompt = ChatPromptTemplate.from_template("""
+                You are a kind, polite, and precise assistant.
+                - Begin with a warm and respectful greeting (avoid repeating greetings every turn).
+                - Understand the user’s intent even with typos or grammatical mistakes.
+                - Answer ONLY using the retrieved context.
+                - If answer not in context, say:
+                  "I couldn’t find that information in the database. Could you please rephrase or ask something else?"
+                - Keep answers clear, concise, and friendly.
+
+                Context:
+                {context}
+
+                User Question:
+                {question}
+
+                Answer:
+                """)
+    chain = prompt | llm
+    response = chain.invoke({"context": context_text, "question": question})
+    return response.content
