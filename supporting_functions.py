@@ -63,8 +63,8 @@ def get_transcript(video_id, language):
 #)
 
 llm= ChatMistralAI(
-    model="mistral-large-2512",
-    temperature=0.2
+    model="mistral-small-2506",
+    #temperature=0.2
 )
 
 
@@ -198,6 +198,7 @@ def rag_answer(question, vectorstore):
     response= chain.invoke({"context":context_text,"question":question})
 
     return response.content
+
 
 
 
