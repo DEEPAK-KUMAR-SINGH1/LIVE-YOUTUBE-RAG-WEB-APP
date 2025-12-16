@@ -195,3 +195,4 @@ def rag_answer(question, vectorstore):
 
     return response.content
 
+
