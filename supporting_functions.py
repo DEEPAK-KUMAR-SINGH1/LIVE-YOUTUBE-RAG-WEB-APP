@@ -16,7 +16,7 @@ from langchain_chroma import Chroma
 #from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_mistralai import ChatMistralAI
 
-#from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.prompts import ChatPromptTemplate
 
 
 
@@ -194,3 +194,4 @@ def rag_answer(question, vectorstore):
     response= chain.invoke({"context":context_text,"question":question})
 
     return response.content
+
