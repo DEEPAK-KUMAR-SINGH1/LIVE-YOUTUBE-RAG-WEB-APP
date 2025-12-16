@@ -20,7 +20,7 @@ from langchain_core.prompts import ChatPromptTemplate
 
 
 
-load_dotenv()
+#load_dotenv()
 
 #API_KEY = st.secrets["MISTRAL_API_KEY"]
 
@@ -63,7 +63,7 @@ def get_transcript(video_id, language):
 #)
 
 llm= ChatMistralAI(
-    model="ministral-8b-2512",
+    model="mistral-large-2512",
     temperature=0.2
 )
 
@@ -198,6 +198,7 @@ def rag_answer(question, vectorstore):
     response= chain.invoke({"context":context_text,"question":question})
 
     return response.content
+
 
 
 
