@@ -1,0 +1,1 @@
+VidSynth AI transforms any YouTube video into clear insights. It fetches transcripts, translates them to English, extracts key topics, generates structured notes, and lets you chat with the video using AI-powered semantic search
