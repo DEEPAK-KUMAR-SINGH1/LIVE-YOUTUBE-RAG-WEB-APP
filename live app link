@@ -1,1 +1,10 @@
 link = https://youtubev.streamlit.app/ 
+
+Please click this link to see the live demo of my app.
+Steps to check it out:
+Step 1: Click the link and visit the site.
+Step 2: Click the sidebar of the app.
+Step 3: Copy any YouTube video link you want to chat with or create notes from.
+Step 4: Paste the link into the app and select the transcript language
+(e.g., English = en, Hindi = hi).
+Step 5: Select the mode you want — Chat with Video or Create Notes.
